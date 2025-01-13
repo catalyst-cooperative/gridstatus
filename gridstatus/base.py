@@ -94,7 +94,10 @@ class ISOBase:
 
     def _latest_lmp_from_today(self, market, locations, **kwargs):
         lmp_df = self.get_lmp(
-            date="today", market=market, locations=locations, **kwargs
+            date="today",
+            market=market,
+            locations=locations,
+            **kwargs,
         )
         # Assume sorted in ascending order
         latest_df = lmp_df.groupby("Location").last().reset_index()
