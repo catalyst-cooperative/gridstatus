@@ -1849,9 +1849,11 @@ class IESO(ISOBase):
         df["Metric"] = df["Metric"].replace({"Imp": "Import", "Exp": "Export"})
 
         df["Zone"] = df["Zone"].apply(
-            lambda x: x.replace(".", "")
-            if isinstance(x, str) and x.startswith("PQ")
-            else (x.replace("-", " ").title() if isinstance(x, str) else x),
+            lambda x: (
+                x.replace(".", "")
+                if isinstance(x, str) and x.startswith("PQ")
+                else (x.replace("-", " ").title() if isinstance(x, str) else x)
+            ),
         )
 
         df = df.pivot_table(
@@ -4450,7 +4452,8 @@ class IESO(ISOBase):
             return "connection reset" in msg or "connection aborted" in msg
 
         def _fetch_with_retries(
-            file: str, last_modified_time: str
+            file: str,
+            last_modified_time: str,
         ) -> tuple[dict, pd.Timestamp]:
             # small stagger based on filename hash so not all tasks start at once
             initial_delay = (hash(file) % 2000) / 1000.0  # 0–2s
