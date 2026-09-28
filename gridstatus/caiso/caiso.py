@@ -2231,10 +2231,9 @@ class CAISO(ISOBase):
         )
 
         df.columns = df.columns.map(
-            lambda x: x.title()
-            .replace("_", " ")
-            .replace("Baa", "BAA")
-            .replace("Mw", "MW"),
+            lambda x: (
+                x.title().replace("_", " ").replace("Baa", "BAA").replace("Mw", "MW")
+            ),
         )
 
         # Create an identifier column (separated by hyphens because some of the tie
